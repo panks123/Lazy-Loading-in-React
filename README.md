@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# What is lazy loading?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Lazy loading is one of the most common design patterns used in web and mobile development. It is used  to increase an application’s performance by reducing initial loading time. The idea is to load only the relevent components first not the whole application, and then accoeding to users requirement load the other components on-demand dynamically.
 
-## Available Scripts
+For example, we can initially load the components and modules related to user login and registration. Then, we can load the rest of the components based on user navigation.
 
-In the project directory, you can run:
+We cannot feel it in small scale applications But it significantly impacts large-scale applications by reducing the initial load time.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Advantages of Lazy Loading
+- Reduces initial loading time by reducing the bundle size.
+- Reduces browser workload.
+- Improves application performance in low bandwidth situations.
+- Improves user experience at initial loading.
+- Optimizes resource usage.
+## Disadvantages of Lazy Loading
+- Not suitable for small-scale applications.
+- Placeholders can slow down quick scrolling.
+- Requires additional communication with the server to fetch resources.
+- Can affect SEO and ranking.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to use lazy loading in react?
+React has two features that make it very easy to apply code-splitting and lazy loading to React components: **React.lazy()** and **React.Suspense**
 
-### `npm test`
+## What is code-splitting?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+After the introduction of **ES modules**, transpilers such as **Babel**, and bundlers such as **webpack and Browserify**, we can now write JavaScript applications in a completely modular pattern for easy maintainability. 
+Usually, each module is imported and merged into a single file called **bundle.js** by the bundler, then the bundle is included on a webpage to load the entire app. 
+As the app grows, the bundle size increases and eventually impacts page load times.
 
-### `npm run build`
+**Code-splitting** is the process of dividing a large bundle of code into multiple bundles that can be loaded dynamically. This will improve performance of the oversized applications.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Dynamic imports in React
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+It is way of code splitting. It is done using **import()**. Inside import() we pass the path of the component to be loaded dynamically.
+It returns a promise that is fulfilled with the loaded module or rejected if the module can’t be loaded.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## React.lazy
 
-### `npm run eject`
+**React.lazy()** is a function that makes it easy to create components that are loaded using dynamic import() but rendered like regular components. 
+React.lazy() takes a function as its argument that must return a promise by calling import() to load the component. 
+The returned promise resolves to a **module(or compoennet)** with a default export containing the React component.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## React.Suspense 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**React.Suspense** is a component for wrapping lazy components. We can wrap a single lazy component, multiple lazy components, or multiple lazy components with different hierarchy levels with React.Suspense. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Also it accepts a prop called **fallback** where we can pass a Loading/ waiting message (or we can pass a Loading UI component as well).
+This will be displayed until the wrapped lazy component is loaded and rendered.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Note:** However, sometimes we might face issues due to promise rejections in the React.lazy() function. To overcome such situations, we need to create a **React error boundary** component and wrap the Suspense components using it.
